@@ -1,0 +1,53 @@
+[
+    {
+        "name": "Sandisk Ultra 128GB Memory Card upto 80MB/s",
+        "price": "45.8",
+        "description": "Ultra fast with magnificient speed. Beyond Imagination.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+        "ratings": "4.5",
+        "images": [
+            {
+                "public_id": "products/t56ygef33rdqwdf",
+                "url": "https://www.google.com"
+            }
+        ],
+        "category": "Home",
+        "seller": "Amazon",
+        "stock": "50",
+        "numOfReviews": "32",
+        "reviews": []
+    },
+    {
+        "name": "Core i7/ 3rd Geneartion HP Laptop",
+        "price": "72.1",
+        "description": "4GB RAM / 520GB HDD. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+        "ratings": "4.7",
+        "images": [
+            {
+                "public_id": "products/kkoaa123ddfknmb",
+                "url": "https://www.google.com"
+            }
+        ],
+        "category": "Laptop",
+        "seller": "Ebay",
+        "stock": "8",
+        "numOfReviews": "22",
+        "reviews": []
+    },
+    {
+        "name": "Audionic Speaker",
+        "price": "15",
+        "description": "A1 quality sound producer. Beyond Imagination.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+        "ratings": "4.9",
+        "images": [
+            {
+                "public_id": "products/qqweertybnvf67m",
+                "url": "https://www.google.com"
+            }
+        ],
+        "category": "Accessories",
+        "seller": "Daraz",
+        "stock": "02",
+        "numOfReviews": "3",
+        "reviews": []
+    }
+]
