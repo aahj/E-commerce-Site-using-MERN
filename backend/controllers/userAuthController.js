@@ -4,17 +4,25 @@ const sendEmail = require('../utills/sendEmail');
 const cathcAsyncErrors = require('../middlewares/catchAsyncError');
 const sendToken = require('../utills/jwtToken');
 const crypto = require('crypto');
+const cloudinary = require('cloudinary');
 
 // register a user => /api/v1/register
 exports.registerUser = cathcAsyncErrors(async (req, res, next) => {
+
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: 'avatars',
+        width: 150,
+        crop: 'scale'
+    })
+
     const { name, email, password } = req.body;
     const user = await User.create({
         name,
         email,
         password,
         avatar: {
-            public_id: 'avatars/f6bbdcf1-0247-458c-a222-3b0b03668144',
-            url: 'https://firebasestorage.googleapis.com/v0/b/olx-replica-reactjs.appspot.com/o/images%2Fbattery%20Snapshot.png?alt=media&token=f6bbdcf1-0247-458c-a222-3b0b03668144'
+            public_id: result.public_id,
+            url: result.secure_url
         }
     })
 
@@ -68,7 +76,9 @@ exports.forgotPassword = cathcAsyncErrors(async (req, res, next) => {
     await user.save({ validateBeforesave: false })
 
     // create reset password url
-    const resetURL = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`;
+    // const resetURL = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`;
+    const resetURL = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+
     const message = `Your password reset token is as follow: \n\n${resetURL}\n\n If you have not requested this email, then ignore it.`
 
     try {
@@ -147,7 +157,24 @@ exports.updateProfile = cathcAsyncErrors(async (req, res, next) => {
         name: req.body.name,
         email: req.body.email
     }
-    // update avatar Todo
+    // update avatar
+    if (req.body.avatar !== '') {
+        const user = await User.findById(req.user.id);
+        const imageID = user.avatar.public_id;
+        // delete old picture
+        const res = await cloudinary.v2.uploader.destroy(imageID);
+        const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: 'avatars',
+            width: 150,
+            crop: 'scale'
+        })
+
+        newData.avatar = {
+            public_id: result.public_id,
+            url: result.secure_url
+        }
+    }
+
     const user = await User.findByIdAndUpdate(req.user.id, newData, {
         new: true,
         runValidators: true,

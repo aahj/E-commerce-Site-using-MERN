@@ -15,26 +15,33 @@ exports.newProduct = cathcAsyncErrors(async (req, res, next) => {
 })
 
 //get all the Products  => /api/v1/products
-exports.getProducts = cathcAsyncErrors(async (req, res, next) => {
-    const resPerPage = 2;
-    const productCount = await Products.countDocuments();
+exports.getProducts = cathcAsyncErrors(async (req, res, next) => {    
+    const resPerPage = 5;
+    const productsCount = await Products.countDocuments();
     const apiFeatures = new APIFeatures(Products.find(), req.query)
         .search()
         .filter()
-        .pagination(resPerPage);
-    const products = await apiFeatures.query;
+
+    let products = await apiFeatures.query;
+    const filteredProductCount = products.length;
+
+    apiFeatures.pagination(resPerPage);
+    
+    products = await apiFeatures.query;
+
     res.status(200).json({
         success: true,
-        count: products.length,
-        productCount,
+        productsCount,
+        resPerPage,
+        filteredProductCount,
         products
     })
 })
 
 // get single product  => /api/v1/product/:id
 exports.getSingleProduct = cathcAsyncErrors(async (req, res, next) => {
-    const products = await Products.findById(req.params.id);
-    if (!products) {
+    const product = await Products.findById(req.params.id);
+    if (!product) {
         // return res.status(404).json({
         //     success: false,
         //     message: "Product Not found"
@@ -45,7 +52,7 @@ exports.getSingleProduct = cathcAsyncErrors(async (req, res, next) => {
     }
     res.status(200).json({
         success: true,
-        products
+        product
     })
 })
 
@@ -105,7 +112,7 @@ exports.createProductReview = cathcAsyncErrors(async (req, res, next) => {
     else {
         product.reviews.push(review);
         product.numOfReviews = product.reviews.length;
-    }    
+    }
 
     // add ratings and divide by prod review lenght
     // reduce() reduce to multiple values to single values

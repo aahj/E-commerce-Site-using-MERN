@@ -22,6 +22,7 @@ const seedProducts = async () => {
 
     } catch (error) {
         console.log(error.message);
+        // console.log(error.stack);
         process.exit();
     }
 }
