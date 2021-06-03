@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import MetaData from '../Layouts/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { register_user, clearError } from '../../actions/userAction';
@@ -154,7 +154,7 @@ const Register = ({ history }) => {
                         <Grid item xs={12} sm={10}>
                             <TextField
                                 variant="outlined"
-                                // required
+                                required
                                 fullWidth                                                              
                                 type="file"
                                 id="customFile"

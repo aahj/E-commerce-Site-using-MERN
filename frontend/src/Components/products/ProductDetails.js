@@ -1,16 +1,24 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import MetaData from '../Layouts/MetaData';
+import ListReviews from '../review/ListReviews';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetails, clearError } from '../../actions/productActions';
+import { getProductDetails, clearError, newReview } from '../../actions/productActions';
 import Loader from '../Layouts/Loader';
 import { useAlert } from 'react-alert';
 import { Carousel } from 'react-bootstrap';
 import { addItemsToCart } from '../../actions/cartAction';
+import { NEW_REVIEW_RESET } from '../../constants/productConstants';
+
 const ProductDetails = ({ match }) => {
     const [qty, setQty] = useState(1);
     const dispatch = useDispatch();
     const alert = useAlert();
     const { loading, error, product } = useSelector(state => state.productDetails);
+    const { user } = useSelector(state => state.auth);
+    const { error: reviewError, success } = useSelector(state => state.newReview);
+
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
 
     useEffect(() => {
         dispatch(getProductDetails(match.params.id))
@@ -19,8 +27,17 @@ const ProductDetails = ({ match }) => {
             alert.error(error)
             dispatch(clearError());
         }
+        if (reviewError) {
+            alert.error(reviewError)
+            dispatch(clearError());
+        }
 
-    }, [dispatch, alert, error, match.params.id])//if change any of the dependencies we have to load data
+        if (success) {
+            alert.success("Review Posted Successfully!")
+            dispatch({ type: NEW_REVIEW_RESET })
+        }
+
+    }, [dispatch, alert, error, match.params.id, reviewError, success])//if change any of the dependencies we have to load data
 
     const increaseQuantity = () => {
         const count = document.querySelector('.count');
@@ -36,9 +53,55 @@ const ProductDetails = ({ match }) => {
         setQty(qauntity);
     }
 
-    const addToCart=()=>{
-        dispatch(addItemsToCart(match.params.id,qty));
+    const addToCart = () => {
+        dispatch(addItemsToCart(match.params.id, qty));
         alert.success('Items Added To Cart')
+    }
+
+    function setUserRatings() {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            // setting starValue as attribut
+            star.starValue = index + 1;
+            ['click', 'mouseover', 'mouseout'].forEach(function (e) {
+                star.addEventListener(e, showRatings);
+            })
+        })
+        function showRatings(e) {
+            stars.forEach((star, index) => {
+                if (e.type === 'click') {
+                    if (index < this.starValue) {
+                        star.classList.add('darkPink');
+                        setRating(this.starValue);
+                    } else {
+                        star.classList.remove('darkPink')
+                    }
+                }
+
+                if (e.type === 'mouseover') {
+                    if (index < this.starValue) {
+                        star.classList.add('lightPink')
+                    } else {
+                        star.classList.remove('lightPink')
+                    }
+                }
+
+                if (e.type === 'mouseout') {
+                    star.classList.remove('lightPink')
+                }
+            })
+        }
+    }
+
+    const reviewHandler = () => {
+        const formData = new FormData();
+
+        // set first parameter in formData.set() as you have defined in model and controller on backend        
+        formData.set('rating', rating);
+        formData.set('comment', comment);
+        formData.set('productId', match.params.id);
+
+        dispatch(newReview(formData));        
     }
 
     return (
@@ -98,9 +161,16 @@ const ProductDetails = ({ match }) => {
                                 <hr />
                                 <p id="product_seller mb-3">Sold by: <strong>{product.seller}</strong></p>
 
-                                <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal">
+                                {user ? <button id="review_btn"
+                                    type="button"
+                                    className="btn btn-primary mt-4"
+                                    data-toggle="modal"
+                                    data-target="#ratingModal"
+                                    onClick={setUserRatings}>
                                     Submit Your Review
-                                </button>
+                                </button> :
+                                    <div className='alert alert-danger mt-5' type='alert'>Login To Post Your Review</div>
+                                }
 
                                 <div className="row mt-2 mb-5">
                                     <div className="rating w-50">
@@ -124,11 +194,20 @@ const ProductDetails = ({ match }) => {
                                                             <li className="star"><i className="fa fa-star"></i></li>
                                                         </ul>
 
-                                                        <textarea name="review" id="review" className="form-control mt-3">
+                                                        <textarea
+                                                            name="review"
+                                                            id="review"
+                                                            value={comment}
+                                                            onChange={(e) => setComment(e.target.value)}
+                                                            className="form-control mt-3">
 
                                                         </textarea>
 
-                                                        <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close">Submit</button>
+                                                        <button
+                                                            className="btn my-3 float-right review-btn px-4 text-white"
+                                                            data-dismiss="modal"
+                                                            onClick={reviewHandler}
+                                                            aria-label="Close">Submit</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,6 +218,9 @@ const ProductDetails = ({ match }) => {
                             </div>
                         </div>
 
+                        {product.reviews && product.reviews.length > 0 && (
+                            <ListReviews reviews={product.reviews} />
+                        )}
                     </Fragment>
                 )
             }

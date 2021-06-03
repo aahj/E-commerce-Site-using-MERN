@@ -1,5 +1,6 @@
 :root{
     --primary:#F50057;
+    --primary_light:#ff337a;
     --secondary:#0D2F36;
     --tertiary:#fdcc0d;
 }
@@ -109,7 +110,7 @@ nav {
 
 .ratings {
     font-size: 1.2rem;
-    color: var(--primary);
+    color: var(--primary_light);
 }
 
 #no_of_reviews {
@@ -133,7 +134,7 @@ footer {
     display: inline-block;
     position: relative;
     font-family: FontAwesome;
-    color: var(--primary);
+    color: var(--primary_light);
 }
 
 .rating-outer::before {
@@ -151,7 +152,7 @@ footer {
 
 .rating-inner::before {
     content: '\f005 \f005 \f005 \f005 \f005';
-    color: var(--primary);
+    color: var(--primary_light);
 }
 
 /* Product Details Page */
@@ -617,12 +618,12 @@ ul.CTAs a {
     padding-left: 0;
 }
 
-.orange {
+.darkPink {
     color: var(--primary);
 }
 
-.yellow {
-    color: #fdcc0d;
+.lightPink {
+    color: #ff99bd;
 }
 
 .review_user {

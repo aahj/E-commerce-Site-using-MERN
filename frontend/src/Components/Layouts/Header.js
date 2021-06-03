@@ -89,16 +89,15 @@ const Header = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            {user && user.role !== 'admin' ? (
+            {user && user.role === 'admin' && (
                 <MenuItem onClick={handleMenuClose}>
-                    <Link className='dropdown-item' to='/orders/me'>Orders</Link>
+                    <Link className='dropdown-item' to='/dashboard'>Dashboard</Link>
                 </MenuItem>
-            ) :
-                (
-                    <MenuItem onClick={handleMenuClose}>
-                        <Link className='dropdown-item' to='/dashboard'>Dashboard</Link>
-                    </MenuItem>
-                )}
+            )}
+
+            <MenuItem onClick={handleMenuClose}>
+                <Link className='dropdown-item' to='/orders/me'>Orders</Link>
+            </MenuItem>
             <MenuItem onClick={handleMenuClose}>
                 <Link className='dropdown-item' to='/me'>Profile</Link>
             </MenuItem>
@@ -131,22 +130,21 @@ const Header = () => {
                 </Link>
             </MenuItem>
 
-            {user && user.role !== 'admin' ? (
+            {user && user.role === 'admin' && (
                 <MenuItem onClick={handleMenuClose}>
                     <IconButton>
-                        <TocIcon />
+                        <DashboardIcon />
                     </IconButton>
-                    <Link className='dropdown-item' to='/orders/me'>Orders</Link>
+                    <Link className='dropdown-item' to='/dashboard'>Dashboard</Link>
                 </MenuItem>
-            ) :
-                (
-                    <MenuItem onClick={handleMenuClose}>
-                        <IconButton>
-                            <DashboardIcon />
-                        </IconButton>
-                        <Link className='dropdown-item' to='/dashboard'>Dashboard</Link>
-                    </MenuItem>
-                )}
+            )}
+            
+            <MenuItem onClick={handleMenuClose}>
+                <IconButton>
+                    <TocIcon />
+                </IconButton>
+                <Link className='dropdown-item' to='/orders/me'>Orders</Link>
+            </MenuItem>
             <MenuItem onClick={handleMenuClose}>
                 <IconButton>
                     <AccountCircle />

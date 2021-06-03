@@ -25,13 +25,13 @@ const ShippingInfo = ({ history }) => {
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(saveShippingInfo({ address, city, phoneNo, postalCode, country }));
-        history.push('/confirm');
+        history.push('/order/confirm');
     }
 
     return (
         <Fragment>
-            <CheckOutSteps shipping />
             <MetaData title={'Shipping Info'} />
+            <CheckOutSteps shipping />
             <div className="row wrapper">
                 <div className="col-10 col-lg-5">
                     <form className="shadow-lg" onSubmit={submitHandler}>

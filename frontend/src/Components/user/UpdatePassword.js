@@ -1,14 +1,40 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import MetaData from '../Layouts/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePassowrd, clearError } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
 import { UPDATE_PASSWORD_RESET } from '../../constants/userConstant'
 
-const UpdatePassword = ({ history }) => {
+import {
+    Avatar, Button, CssBaseline, TextField, Grid, Typography, Container, makeStyles
+} from '@material-ui/core';
+import UpdateIcon from '@material-ui/icons/Update';
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
+
+const UpdatePassword = ({history}) => {
+    const classes = useStyles();
     const [oldPassword, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
-
 
     const dispatch = useDispatch();
     const alert = useAlert();
@@ -41,42 +67,62 @@ const UpdatePassword = ({ history }) => {
         dispatch(updatePassowrd(formData))
     }
     return (
-        <Fragment>
-            <MetaData title={'Change Password'} />
-            <div className="row wrapper">
-                <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" onSubmit={submitHandler}>
-                        <h1 className="mt-2 mb-5">Update Password</h1>
-                        <div className="form-group">
-                            <label htmlFor="old_password_field">Old Password</label>
-                            <input
+        <Container component="main" maxWidth="xs">
+            <MetaData title={'Change Password'} />            
+            <CssBaseline />
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <UpdateIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Update Password
+                    </Typography>
+                <form className={classes.form} onSubmit={submitHandler}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                        <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Old Password"
                                 type="password"
                                 id="old_password_field"
-                                className="form-control"
+                                autoComplete="current-password"
                                 value={oldPassword}
                                 onChange={(e) => setOldPassword(e.target.value)}
                             />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="new_password_field">New Password</label>
-                            <input
+                        </Grid>
+                        <Grid item xs={12}>
+                        <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="New Password"
                                 type="password"
                                 id="new_password_field"
-                                className="form-control"
+                                autoComplete="current-password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-                        </div>
-
-                        <button type="submit"
-                            className="btn update-btn btn-block mt-4 mb-3"
-                            disabled={loading ? true : false}
-                        >Update Password</button>
-                    </form>
-                </div>
+                        </Grid>
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="secondary"
+                        className={classes.submit}
+                        disabled={loading ? true : false}
+                    >
+                        Update Password
+                    </Button>
+                </form>
             </div>
-        </Fragment>
+        </Container>
     )
 }
 

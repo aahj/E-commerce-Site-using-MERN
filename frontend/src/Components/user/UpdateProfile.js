@@ -1,12 +1,38 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, {  useState, useEffect } from 'react';
 import MetaData from '../Layouts/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile, clearError, load_user } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
 import { UPDATE_PROFILE_RESET } from '../../constants/userConstant'
 
+import {
+    Avatar, Button, CssBaseline, TextField, Grid, Typography, Container, makeStyles
+} from '@material-ui/core';
+import UpdateIcon from '@material-ui/icons/Update';
 
-const UpdateProfile = ({ history }) => {
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
+const UpdateProfile= ({ history }) => {
+    const classes = useStyles();
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [avatar, setAvatar] = useState('');
@@ -53,8 +79,8 @@ const UpdateProfile = ({ history }) => {
 
     const onChange = e => {
         const reader = new FileReader();
-        
-        reader.onload = () => {            
+
+        reader.onload = () => {
             if (reader.readyState === 2) {
                 setAvatarPreview(reader.result)
                 setAvatar(reader.result)
@@ -63,74 +89,77 @@ const UpdateProfile = ({ history }) => {
         reader.readAsDataURL(e.target.files[0])
     }
     return (
-        <Fragment>
+        <Container component="main" maxWidth="xs">
             <MetaData title={'Update Profile'} />
-
-            <div className="row wrapper">
-                <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
-                        <h1 className="mt-2 mb-5">Update Profile</h1>
-
-                        <div className="form-group">
-                            <label htmlFor="email_field">Name</label>
-                            <input
-                                type="name"
-                                id="name_field"
-                                className="form-control"
-                                name='name'
+            <CssBaseline />
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <UpdateIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Update Profile
+                    </Typography>
+                <form className={classes.form} onSubmit={submitHandler} encType='multipart/form-data'>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                autoComplete="fname"
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="name"
+                                label="Name"
+                                autoFocus
                                 value={name}
+                                name='name'
                                 onChange={(e) => setName(e.target.value)}
                             />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email_field">Email</label>
-                            <input
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                autoComplete="email"
                                 type="email"
-                                id="email_field"
-                                className="form-control"
-                                name='email'
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                name="email"
                             />
-                        </div>
+                        </Grid>
 
-                        <div className='form-group'>
-                            <label htmlFor='avatar_upload'>Avatar</label>
-                            <div className='d-flex align-items-center'>
-                                <div>
-                                    <figure className='avatar mr-3 item-rtl'>
-                                        <img
-                                            src={user.avatar.url}
-                                            className='rounded-circle'
-                                            alt='Avatar Preview'
-                                        />
-                                    </figure>
-                                </div>
-                                <div className='custom-file'>
-                                    <input
-                                        type='file'
-                                        name='avatar'
-                                        className='custom-file-input'
-                                        id='customFile'
-                                        accept='image/*'
-                                        onChange={onChange}
-                                    />
-                                    <label className='custom-file-label' htmlFor='customFile'>
-                                        Choose Avatar
-                                </label>
-                                </div>
-                            </div>
-                        </div>
+                        <Grid item xs={12} sm={2}>
+                            <Avatar alt='Avatar Preview' src={user.avatar.url} />
+                        </Grid>
 
-                        <button
-                            type="submit"
-                            className="btn update-btn btn-block mt-4 mb-3"
-                            disabled={loading ? true : false}>Update</button>
-                    </form>
-                </div>
+                        <Grid item xs={12} sm={10}>
+                            <TextField
+                                variant="outlined"
+                                // required
+                                fullWidth
+                                type="file"
+                                id="customFile"
+                                accept="images/*"
+                                name="avatar"
+                                onChange={onChange}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="secondary"
+                        className={classes.submit}
+                        disabled={loading ? true : false}
+                    >
+                        Update
+                    </Button>
+                </form>
             </div>
-        </Fragment>
+        </Container>
     )
 }
 

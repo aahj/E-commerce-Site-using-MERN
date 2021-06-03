@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = ({ history ,location}) => {
     const dispatch = useDispatch();
-    const alert = useAlert();
+    const Alert = useAlert();
 
     const { loading, error, isAuthenticated } = useSelector(state => state.auth);
     const [email, setEmail] = useState('');
@@ -48,11 +48,11 @@ const Login = ({ history ,location}) => {
             history.push(redirect)
         }
         if (error) {
-            alert.error(error)
+            Alert.error(error);            
             dispatch(clearError());
         }
 
-    }, [dispatch, alert, error, isAuthenticated, history])
+    }, [dispatch, Alert, error, isAuthenticated, history])
 
     const submitHandler = (e) => {
         e.preventDefault();

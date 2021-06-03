@@ -1,9 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { productReducer, productDetailsReducer } from './reducer/productReducers';
+import { productReducer, productDetailsReducer,newReviewReducer } from './reducer/productReducers';
 import { authReducer, userReducer, forogotPasswordReducer } from './reducer/userReducer';
 import { cartReducer } from './reducer/cartReducers';
+import { newOrderReducer, myOrdersReducer, orderDetailReducer } from './reducer/orderReducer';
 
 
 const reducer = combineReducers({
@@ -12,7 +13,11 @@ const reducer = combineReducers({
     auth: authReducer,
     user: userReducer,
     forogotPassword: forogotPasswordReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    newOrder: newOrderReducer,
+    myOrders: myOrdersReducer,
+    orderDetails: orderDetailReducer,
+    newReview:newReviewReducer
 })
 
 // put data in state just before loading
@@ -23,9 +28,9 @@ let initialState = {
         cartItems: localStorage.getItem('cartItems')
             ? JSON.parse(localStorage.getItem('cartItems'))
             : [],
-        shippingInfo:localStorage.getItem('shippingInfo')
-        ? JSON.parse(localStorage.getItem('shippingInfo'))
-        : {},
+        shippingInfo: localStorage.getItem('shippingInfo')
+            ? JSON.parse(localStorage.getItem('shippingInfo'))
+            : {},
     }
 }
 
