@@ -28,27 +28,27 @@ const ListOrders = () => {
                 {
                     label: 'Order ID',
                     field: 'id',
-                    sort: 'asc'
+                    sort: 'asc',                    
                 },
                 {
                     label: 'Num Of Items',
                     field: 'numOfItems',
-                    sort: 'asc'
+                    sort: 'asc',                    
                 },
                 {
                     label: 'Amount',
                     field: 'amount',
-                    sort: 'asc'
+                    sort: 'asc',                    
                 },
                 {
                     label: 'Status',
                     field: 'status',
-                    sort: 'asc'
+                    sort: 'asc',                    
                 },
                 {
                     label: 'Actions',
                     field: 'actions',
-                    sort: 'asc'
+                    sort: 'asc',                    
                 }
             ],
             rows: []
@@ -81,6 +81,7 @@ const ListOrders = () => {
                     bordered
                     striped
                     hover
+                    responsive                    
                 />
             )}
         </Fragment>

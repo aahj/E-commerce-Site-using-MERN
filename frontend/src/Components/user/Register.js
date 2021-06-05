@@ -56,7 +56,7 @@ const Register = ({ history }) => {
             dispatch(clearError());
         }
 
-    }, [dispatch, alert, error, isAuthenticated,history])
+    }, [dispatch, alert, error, isAuthenticated, history])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -155,13 +155,13 @@ const Register = ({ history }) => {
                             <TextField
                                 variant="outlined"
                                 required
-                                fullWidth                                                              
+                                fullWidth
                                 type="file"
                                 id="customFile"
                                 accept="images/*"
                                 name="avatar"
                                 onChange={onChange}
-                            />                           
+                            />
                         </Grid>
                     </Grid>
                     <Button

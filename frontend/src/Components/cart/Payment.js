@@ -6,6 +6,31 @@ import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcEl
 import { useAlert } from 'react-alert'
 import axios from 'axios';
 import { clearError, createOrder } from '../../actions/orderAction';
+import {
+    Avatar, Button, CssBaseline, InputLabel, Grid, Typography, Container, makeStyles
+} from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
 
 const options = {
     style: {
@@ -18,7 +43,10 @@ const options = {
     }
 }
 
+
 const Payment = ({ history }) => {
+    const classes = useStyles();
+
     const { user } = useSelector(state => state.auth);
     const { shippingInfo, cartItems } = useSelector(state => state.cart);
     const { error } = useSelector(state => state.newOrder);
@@ -93,7 +121,7 @@ const Payment = ({ history }) => {
                         status: result.paymentIntent.status
                     }
                     dispatch(createOrder(order))
-                    console.log('order==>',order);
+                    console.log('order==>', order);
 
                     history.push('/success')
                 }
@@ -109,56 +137,62 @@ const Payment = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Payment'} />
             <CheckOutSteps shipping confirm payment />
-            <div className="row wrapper">
-                <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" onSubmit={submitHandler}>
-                        <h1 className="mb-4">Card Info</h1>
-                        <div className="form-group">
-                            <label htmlFor="card_num_field">Card Number</label>
-                            <CardNumberElement
-                                type="text"
-                                id="card_num_field"
-                                className="form-control"
-                                options={options}
-                            />
-                        </div>
+            <Container component="main" maxWidth="xs">
+                <MetaData title={'Payment'} />
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <InfoIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Card Info
+                    </Typography>
+                    <form className={classes.form} onSubmit={submitHandler}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <InputLabel shrink={true}>Card Number</InputLabel>
+                                <CardNumberElement
+                                    type="text"
+                                    id="card_num_field"
+                                    className="form-control"
+                                    options={options}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <InputLabel shrink={true}>Card Expiry</InputLabel>
+                                <CardExpiryElement
+                                    type="text"
+                                    id="card_exp_field"
+                                    className="form-control"
+                                    options={options}
+                                />
+                            </Grid>
 
-                        <div className="form-group">
-                            <label htmlFor="card_exp_field">Card Expiry</label>
-                            <CardExpiryElement
-                                type="text"
-                                id="card_exp_field"
-                                className="form-control"
-                                options={options}
-                            />
-                        </div>
+                            <Grid item xs={12}>
+                                <InputLabel shrink={true}>Card CVC</InputLabel>
+                                <CardCvcElement
+                                    type="text"
+                                    id="card_cvc_field"
+                                    className="form-control"
+                                    options={options}
+                                />
+                            </Grid>
 
-                        <div className="form-group">
-                            <label htmlFor="card_cvc_field">Card CVC</label>
-                            <CardCvcElement
-                                type="text"
-                                id="card_cvc_field"
-                                className="form-control"
-                                options={options}
-                            />
-                        </div>
-
-
-                        <button
-                            id="pay_btn"
+                        </Grid>
+                        <Button
                             type="submit"
-                            className="btn btn-block py-3"
+                            id="pay_btn"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
                         >
                             Pay {`- $${orderInfo.totalPrice}`}
-                        </button>
-
+                        </Button>
                     </form>
                 </div>
-            </div>
-
-
+            </Container>
         </Fragment>
     )
 }

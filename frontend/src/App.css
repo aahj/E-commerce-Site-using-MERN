@@ -32,24 +32,24 @@ html, body {
     border-radius: 5px;
 }
 
-nav {
+/* nav {
     background-color: #232f3e;
     padding: 1rem 1rem;
-}
+} */
 
-#search_btn {
+/* #search_btn {
     background-color: #febd69;
-}
+} */
 
 .input-group {
     width: 90%;
     margin-right: 35%;
 }
-
+/* 
 #search_field {
     height: 2.4rem;
     padding: 1rem;
-}
+} */
 
 #login_btn, #view_btn {
     background-color: #febd69;
@@ -325,7 +325,7 @@ footer {
 
 /* Avatar */
 
-.avatar {
+/* .avatar {
     display: inline-block;
     margin-bottom: 0;
     height: 3rem;
@@ -333,7 +333,7 @@ footer {
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-}
+} */
 
 .avatar img{
     width: 100%;
@@ -358,11 +358,11 @@ footer {
 
 /* Header User Profile */
 
-.avatar-nav {
+/* .avatar-nav {
     margin-right: 0.6rem;
     height: 2.2rem;
     width: 2.2rem;
-}
+} */
 
 /* Checkout Steps */
 
@@ -509,7 +509,7 @@ footer {
 #sidebar {
     min-width: 100%;
     max-width: 100%;
-    background: #232f3e;
+    background: var(--secondary);
     color: #fff;
     transition: all 0.3s;
 }

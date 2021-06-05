@@ -2,9 +2,33 @@ const Products = require('../model/product');
 const ErrorHanlder = require('../utills/errorHandler');
 const cathcAsyncErrors = require('../middlewares/catchAsyncError');
 const APIFeatures = require('../utills/apiFeatures');
+const cloudinary = require('cloudinary');
 
 // create new product   => /api/v1/admin/product/new
 exports.newProduct = cathcAsyncErrors(async (req, res, next) => {
+    let images = [];
+    if (typeof req.body.images === 'string') {
+        // if single image upload
+        images.push(req.body.images)
+    }
+    else {
+        // for multiple image 
+        images = req.body.images
+    }
+
+    let imagesLink = [];
+    for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+            folder: 'products'
+        });
+        imagesLink.push({
+            public_id: result.public_id,
+            url: result.secure_url
+        })
+    }
+    req.body.images = imagesLink;
+
+
     req.body.user = req.user.id;
     const product = await Products.create(req.body)
 
@@ -16,7 +40,7 @@ exports.newProduct = cathcAsyncErrors(async (req, res, next) => {
 
 //get all the Products  => /api/v1/products
 exports.getProducts = cathcAsyncErrors(async (req, res, next) => {
-    const resPerPage = 5;
+    const resPerPage = 7;
     const productsCount = await Products.countDocuments();
     const apiFeatures = new APIFeatures(Products.find(), req.query)
         .search()
@@ -34,6 +58,17 @@ exports.getProducts = cathcAsyncErrors(async (req, res, next) => {
         productsCount,
         resPerPage,
         filteredProductCount,
+        products
+    })
+})
+
+//get all Products (Admin) => /api/v1/admin/products
+exports.getAdminProducts = cathcAsyncErrors(async (req, res, next) => {
+
+    const products = await Products.find();
+
+    res.status(200).json({
+        success: true,
         products
     })
 })
@@ -62,6 +97,38 @@ exports.updateProduct = cathcAsyncErrors(async (req, res, next) => {
     if (!products) {
         return next(new ErrorHanlder('Product Not found', 404));
     }
+
+    let images = [];
+    if (typeof req.body.images === 'string') {
+        // if single image upload
+        images.push(req.body.images)
+    }
+    else {
+        // for multiple image 
+        images = req.body.images
+    }
+
+    // first delete old image then upload new image
+    if (images !== undefined) {
+        // deleting images associated with product
+        for (let i = 0; i < products.images.length; i++) {
+            const result = await cloudinary.v2.uploader.destroy(products.images[i].public_id)
+        }
+
+        let imagesLink = [];
+        for (let i = 0; i < images.length; i++) {
+            const result = await cloudinary.v2.uploader.upload(images[i], {
+                folder: 'products'
+            });
+            imagesLink.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            })
+        }
+        req.body.images = imagesLink;
+    }
+
+
     products = await Products.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true,
@@ -76,10 +143,17 @@ exports.updateProduct = cathcAsyncErrors(async (req, res, next) => {
 // delete product  => /api/v1/admin/product/:id
 exports.deleteProduct = cathcAsyncErrors(async (req, res, next) => {
     const products = await Products.findById(req.params.id);
+
     if (!products) {
         return next(new ErrorHanlder('Product Not found', 404));
     }
-    await Products.deleteOne();
+
+    // deleting images associated with product
+    for (let i = 0; i < products.images.length; i++) {
+        const result = await cloudinary.v2.uploader.destroy(products.images[i].public_id)
+    }
+
+    await products.remove();
     res.status(200).json({
         success: true,
         message: "Product Deleted Successfully"

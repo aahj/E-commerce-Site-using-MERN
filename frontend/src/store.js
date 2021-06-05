@@ -1,11 +1,16 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { productReducer, productDetailsReducer,newReviewReducer } from './reducer/productReducers';
+import {
+    productReducer,
+    productDetailsReducer,
+    newReviewReducer,
+    newProductReducer,
+    product_Reducer
+} from './reducer/productReducers';
 import { authReducer, userReducer, forogotPasswordReducer } from './reducer/userReducer';
 import { cartReducer } from './reducer/cartReducers';
 import { newOrderReducer, myOrdersReducer, orderDetailReducer } from './reducer/orderReducer';
-
 
 const reducer = combineReducers({
     products: productReducer,
@@ -17,7 +22,9 @@ const reducer = combineReducers({
     newOrder: newOrderReducer,
     myOrders: myOrdersReducer,
     orderDetails: orderDetailReducer,
-    newReview:newReviewReducer
+    newReview: newReviewReducer,
+    newProduct: newProductReducer,
+    product: product_Reducer
 })
 
 // put data in state just before loading
