@@ -33,7 +33,10 @@ import Dashboard from './Components/admin/Dashboard';
 import ProductList from './Components/admin/ProductList';
 import NewProduct from './Components/admin/NewProduct';
 import UpdateProduct from './Components/admin/UpdateProduct';
-
+import OrderList from './Components/admin/OrderList';
+import ProcessOrder from './Components/admin/ProcessOrder';
+import UsersList from './Components/admin/UsersList';
+import UpdateUser from './Components/admin/UpdateUser';
 
 import store from './store';
 import { load_user } from './actions/userAction';
@@ -90,13 +93,17 @@ function App() {
           <ProtectedRoute path='/password/update' component={UpdatePassword} exact />
 
           <ProtectedRoute path='/orders/me' component={ListOrders} exact />
-          {/* <ProtectedRoute path='/order/:id' component={OrderDetails} exact /> */}
+          <ProtectedRoute path='/order/:id' component={OrderDetails} exact />
         </div>
 
         <ProtectedRoute path='/dashboard' isAdmin={true} component={Dashboard} exact />
         <ProtectedRoute path='/admin/products' isAdmin={true} component={ProductList} exact />
         <ProtectedRoute path='/admin/product' isAdmin={true} component={NewProduct} exact />
         <ProtectedRoute path='/admin/product/:id' isAdmin={true} component={UpdateProduct} exact />
+        <ProtectedRoute path='/admin/orders' isAdmin={true} component={OrderList} exact />
+        <ProtectedRoute path='/admin/order/:id' isAdmin={true} component={ProcessOrder} exact />
+        <ProtectedRoute path='/admin/users' isAdmin={true} component={UsersList} exact />
+        <ProtectedRoute path='/admin/user/:id' isAdmin={true} component={UpdateUser} exact />
 
         {/* {!loading && user.role !== 'admin' && (
           <Footer />

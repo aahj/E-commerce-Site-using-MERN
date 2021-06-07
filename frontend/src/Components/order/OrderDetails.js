@@ -10,10 +10,9 @@ const OrderDetails = ({ match }) => {
     const Alert = useAlert();
     const dispatch = useDispatch();
 
-    const { loading, error, order } = useSelector(state => state.orderDetails);
+    const { loading, error, order = {} } = useSelector(state => state.orderDetails);
+    const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order;
 
-    const { paymentInfo, shippingInfo } = order || {};
-    
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, 
     ${shippingInfo.postalCode}, ${shippingInfo.country}`;
 
@@ -40,10 +39,10 @@ const OrderDetails = ({ match }) => {
                             <h1 className="my-5">Order # {order._id}</h1>
 
                             <h4 className="mb-4">Shipping Info</h4>
-                            <p><b>Name:</b> {order.user && order.user.name}</p>
+                            <p><b>Name:</b> {user && user.name}</p>
                             <p><b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}</p>
                             <p className="mb-4"><b>Address:</b>{shippingDetails}</p>
-                            <p><b>Amount:</b> ${order.totalPrice}</p>
+                            <p><b>Amount:</b> ${totalPrice}</p>
 
                             <hr />
 
@@ -53,14 +52,14 @@ const OrderDetails = ({ match }) => {
 
 
                             <h4 className="my-4">Order Status:</h4>
-                            <p className={order.orderStatus && String(order.orderStatus).includes("Delivered") ? 'greenColor' : 'redColor'} >
-                                <b>{order.orderStatus}</b></p>
+                            <p className={orderStatus && String(orderStatus).includes("Delivered") ? 'greenColor' : 'redColor'} >
+                                <b>{orderStatus}</b></p>
 
                             <h4 className="my-4">Order Items:</h4>
 
                             <hr />
                             <div className="cart-item my-1">
-                                {order.orderItems && order.orderItems.map(item => (
+                                {orderItems && orderItems.map(item => (
                                     <div key={item.product} className="row my-5">
                                         <div className="col-4 col-lg-2">
                                             <img src={item.image} alt={item.name} height="45" width="65" />

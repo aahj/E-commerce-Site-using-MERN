@@ -66,6 +66,8 @@ exports.allOrder = cathcAsyncErrors(async (req, res, next) => {
         totalAmount += val.totalPrice;
     })
 
+    totalAmount = totalAmount.toFixed(2);
+    
     res.status(200).json({
         success: true,
         totalAmount,
@@ -78,13 +80,13 @@ exports.updateOrder = cathcAsyncErrors(async (req, res, next) => {
     const order = await Order.findById(req.params.id);
 
     if (order.orderStatus === 'Delivered') {
-        return next(new ErrorHanlder('Your order has been deliverd', 400));
+        return next(new ErrorHanlder('You have already delivered this order', 400));
     }
     order.orderItems.forEach(async item => {
         await updateStock(item.product, item.quantity);
     })
     order.orderStatus = req.body.status,
-        order.deilveredAt = Date.now()
+        order.deliveredAt = Date.now()
 
     await order.save();
 
@@ -94,9 +96,9 @@ exports.updateOrder = cathcAsyncErrors(async (req, res, next) => {
 })
 
 async function updateStock(id, qty) {
-    const prod = await Products.findById(id);
-    prod.stock = prod.stock - qty;
-    await prod.save({ validateBeforeSave: false });
+    const product = await Products.findById(id);
+    product.stock = product.stock - qty;
+    await product.save({ validateBeforeSave: false });
 }
 
 // delete order   => /api/v1/order/:id

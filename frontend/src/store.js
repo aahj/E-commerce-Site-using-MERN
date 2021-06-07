@@ -8,9 +8,22 @@ import {
     newProductReducer,
     product_Reducer
 } from './reducer/productReducers';
-import { authReducer, userReducer, forogotPasswordReducer } from './reducer/userReducer';
+import {
+    authReducer,
+    userReducer,
+    forogotPasswordReducer,
+    allUsersReducer,
+    userDetailsReducer
+} from './reducer/userReducer';
+
 import { cartReducer } from './reducer/cartReducers';
-import { newOrderReducer, myOrdersReducer, orderDetailReducer } from './reducer/orderReducer';
+import {
+    newOrderReducer,
+    myOrdersReducer,
+    orderDetailReducer,
+    allOrdersReducer,
+    orderReducer
+} from './reducer/orderReducer';
 
 const reducer = combineReducers({
     products: productReducer,
@@ -24,7 +37,11 @@ const reducer = combineReducers({
     orderDetails: orderDetailReducer,
     newReview: newReviewReducer,
     newProduct: newProductReducer,
-    product: product_Reducer
+    product: product_Reducer,
+    allOrders: allOrdersReducer,
+    order: orderReducer,
+    allUsers: allUsersReducer,
+    userDetails: userDetailsReducer
 })
 
 // put data in state just before loading
