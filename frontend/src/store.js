@@ -6,7 +6,9 @@ import {
     productDetailsReducer,
     newReviewReducer,
     newProductReducer,
-    product_Reducer
+    product_Reducer,
+    productReviewReducer,
+    reviewReducer
 } from './reducer/productReducers';
 import {
     authReducer,
@@ -41,7 +43,10 @@ const reducer = combineReducers({
     allOrders: allOrdersReducer,
     order: orderReducer,
     allUsers: allUsersReducer,
-    userDetails: userDetailsReducer
+    userDetails: userDetailsReducer,
+    productReviews: productReviewReducer,
+    review: reviewReducer
+
 })
 
 // put data in state just before loading
