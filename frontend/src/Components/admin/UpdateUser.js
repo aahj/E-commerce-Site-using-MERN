@@ -4,10 +4,30 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUser, clearError, getUserDetails } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
 import { UPDATE_USER_RESET } from '../../constants/userConstant';
-import Sidebar from './Sidebar';
+import Sidebar from './dashboard/Sidebar';
+
+import { makeStyles, CssBaseline, Container, } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    container: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(12),
+    },
+}));
 
 
 const UpdateUser = ({ match, history }) => {
+    const classes = useStyles();
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [role, setRole] = useState('');
@@ -53,14 +73,15 @@ const UpdateUser = ({ match, history }) => {
         dispatch(updateUser(user._id, formData))
     }
     return (
-        <Fragment>
+        <div className={classes.root}>
             <MetaData title={`Update User - Admin`} />
-            <div className='row'>
-                <div className='col-12 col-md-2'>
-                    <Sidebar />
-                </div>
-                <div className='col-12 col-md-10'>
-                    <div className="row wrapper">
+            <CssBaseline />
+            <Sidebar />
+
+            <main className={classes.content}>
+                <div className={classes.appBarSpacer} />
+                <Container maxWidth="lg" className={classes.container}>
+                    <div className="row wrapper mt-0 mb-0">
                         <div className="col-10 col-lg-5">
                             <form className="shadow-lg" onSubmit={submitHandler}>
                                 <h1 className="mt-2 mb-5">Update User</h1>
@@ -108,10 +129,9 @@ const UpdateUser = ({ match, history }) => {
                             </form>
                         </div>
                     </div>
-
-                </div>
-            </div>
-        </Fragment>
+                </Container>
+            </main>
+        </div>
     )
 }
 

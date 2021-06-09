@@ -7,9 +7,30 @@ import { DELETE_USER_RESET } from '../../constants/userConstant';
 import { Link } from 'react-router-dom';
 import { useAlert } from 'react-alert';
 import { MDBDataTable } from 'mdbreact';
-import Sidebar from './Sidebar';
+import Sidebar from './dashboard/Sidebar';
+
+import { makeStyles, CssBaseline, Container, } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    container: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(12),
+    },
+}));
+
 
 const UsersList = ({ history }) => {
+    const classes = useStyles();
+
     const Alert = useAlert();
     const dispatch = useDispatch();
     const { loading, error, users } = useSelector(state => state.allUsers);
@@ -88,14 +109,15 @@ const UsersList = ({ history }) => {
     }
 
     return (
-        <Fragment>
+        <div className={classes.root}>
             <MetaData title={'All Users'} />
-            <div className='row'>
-                <div className='col-12 col-md-2'>
-                    <Sidebar />
-                </div>
-                <div className='col-12 col-md-10'>
-                    <h1 className='my-5'>All Users</h1>
+            <CssBaseline />
+            <Sidebar />
+
+            <main className={classes.content}>
+                <div className={classes.appBarSpacer} />
+                <Container maxWidth="lg" className={classes.container}>
+                    <h1 className='mb-5 mt-2'>All Users</h1>
                     {loading ? <Loader /> : (
                         <MDBDataTable
                             data={setUsers()}
@@ -106,9 +128,9 @@ const UsersList = ({ history }) => {
                             responsive
                         />
                     )}
-                </div>
-            </div>
-        </Fragment>
+                </Container>
+            </main>
+        </div>
     )
 }
 

@@ -29,7 +29,7 @@ import ForgotPassword from './Components/user/ForgotPassword';
 import NewPassword from './Components/user/NewPassword';
 
 // imports admin
-import Dashboard from './Components/admin/Dashboard';
+import Dashboard from './Components/admin/dashboard/Dashboard';
 import ProductList from './Components/admin/ProductList';
 import NewProduct from './Components/admin/NewProduct';
 import UpdateProduct from './Components/admin/UpdateProduct';
@@ -68,12 +68,13 @@ function App() {
   const { user, loading } = useSelector(state => state.auth);
   return (
     <Router>
-      <div className="App">
+      <div className="App">                
+
         <Header />
         <div className="container container-fluid">
           <Route path="/" component={Home} exact />
-
           <Route path="/search/:keyword" component={Home} />
+          
           <Route path="/product/:id" component={ProductDetails} exact />
           <Route path="/cart" component={Cart} exact />
           <ProtectedRoute path="/shipping" component={Shipping} />
@@ -107,7 +108,6 @@ function App() {
         <ProtectedRoute path='/admin/users' isAdmin={true} component={UsersList} exact />
         <ProtectedRoute path='/admin/user/:id' isAdmin={true} component={UpdateUser} exact />
         <ProtectedRoute path='/admin/reviews' isAdmin={true} component={ProductReviews} exact />
-
 
         {/* {!loading && user.role !== 'admin' && (
           <Footer />

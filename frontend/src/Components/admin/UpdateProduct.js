@@ -3,10 +3,31 @@ import MetaData from '../Layouts/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProduct, getProductDetails, clearError } from '../../actions/productActions';
 import { useAlert } from 'react-alert';
-import Sidebar from './Sidebar';
 import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants';
+import Sidebar from './dashboard/Sidebar';
+
+import { makeStyles, CssBaseline, Container, } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    container: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(12),
+    },
+}));
+
 
 const UpdateProduct = ({ match, history }) => {
+    const classes = useStyles();
+
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
@@ -111,17 +132,18 @@ const UpdateProduct = ({ match, history }) => {
 
 
     return (
-        <Fragment>
+        <div className={classes.root}>
             <MetaData title={'Update Product'} />
-            <div className='row'>
-                <div className='col-12 col-md-2'>
-                    <Sidebar />
-                </div>
-                <div className='col-12 col-md-10'>
+            <CssBaseline />
+            <Sidebar />
+
+            <main className={classes.content}>
+                <div className={classes.appBarSpacer} />
+                <Container maxWidth="lg" className={classes.container}>
                     <Fragment>
-                        <div className="wrapper my-5">
+                        <div className="wrapper mb-5 mt-2">
                             <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
-                                <h1 className="mb-4">New Product</h1>
+                                <h1 className="mb-4">Update Product</h1>
 
                                 <div className="form-group">
                                     <label htmlFor="name_field">Name</label>
@@ -240,9 +262,9 @@ const UpdateProduct = ({ match, history }) => {
                             </form>
                         </div>
                     </Fragment>
-                </div>
-            </div>
-        </Fragment>
+                </Container>
+            </main>
+        </div>
     )
 }
 

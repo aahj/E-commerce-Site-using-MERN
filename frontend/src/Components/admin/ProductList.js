@@ -7,9 +7,30 @@ import { DELETE_PRODUCT_RESET } from '../../constants/productConstants';
 import { Link } from 'react-router-dom';
 import { useAlert } from 'react-alert';
 import { MDBDataTable } from 'mdbreact';
-import Sidebar from './Sidebar';
+import Sidebar from './dashboard/Sidebar';
+
+import { makeStyles, CssBaseline, Container, } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    container: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(12),
+    },
+}));
+
 
 const ProductList = ({ history }) => {
+    const classes = useStyles();
+
     const Alert = useAlert();
     const dispatch = useDispatch();
     const { loading, error, products } = useSelector(state => state.products);
@@ -59,7 +80,7 @@ const ProductList = ({ history }) => {
                 },
                 {
                     label: 'Actions',
-                    field: 'actions',                    
+                    field: 'actions',
                 }
             ],
             rows: []
@@ -75,8 +96,8 @@ const ProductList = ({ history }) => {
                     <Link to={`/admin/product/${product._id}`} className='btn btn-warning py-1 px-2'>
                         <i className='fa fa-pencil'></i>
                     </Link>
-                    <button className='btn btn-danger py-1 px-2 ml-2' 
-                    onClick={() => deleteProductHandler(product._id)}>
+                    <button className='btn btn-danger py-1 px-2 ml-2'
+                        onClick={() => deleteProductHandler(product._id)}>
                         <i className='fa fa-trash'></i>
                     </button>
                 </Fragment>
@@ -86,18 +107,20 @@ const ProductList = ({ history }) => {
     }
 
     const deleteProductHandler = (id) => {
-        dispatch(deleteProduct(id));        
+        dispatch(deleteProduct(id));
     }
 
     return (
-        <Fragment>
+
+        <div className={classes.root}>
             <MetaData title={'All Products'} />
-            <div className='row'>
-                <div className='col-12 col-md-2'>
-                    <Sidebar />
-                </div>
-                <div className='col-12 col-md-10'>
-                    <h1 className='my-5'>All Products</h1>
+            <CssBaseline />
+            <Sidebar />
+
+            <main className={classes.content}>
+                <div className={classes.appBarSpacer} />
+                <Container maxWidth="lg" className={classes.container}>
+                    <h1 className='mb-5 mt-2'>All Products</h1>
                     {loading ? <Loader /> : (
                         <MDBDataTable
                             data={setProducts()}
@@ -108,9 +131,10 @@ const ProductList = ({ history }) => {
                             responsive
                         />
                     )}
-                </div>
-            </div>
-        </Fragment>
+                </Container>
+            </main>
+        </div>
+
     )
 }
 
