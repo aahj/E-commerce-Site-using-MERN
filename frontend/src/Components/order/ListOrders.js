@@ -6,6 +6,7 @@ import { myOrders, clearError } from '../../actions/orderAction';
 import { Link } from 'react-router-dom';
 import { useAlert } from 'react-alert';
 import { MDBDataTable } from 'mdbreact';
+import Header from '../Layouts/Header';
 
 const ListOrders = () => {
     const Alert = useAlert();
@@ -28,27 +29,27 @@ const ListOrders = () => {
                 {
                     label: 'Order ID',
                     field: 'id',
-                    sort: 'asc',                    
+                    sort: 'asc',
                 },
                 {
                     label: 'Num Of Items',
                     field: 'numOfItems',
-                    sort: 'asc',                    
+                    sort: 'asc',
                 },
                 {
                     label: 'Amount',
                     field: 'amount',
-                    sort: 'asc',                    
+                    sort: 'asc',
                 },
                 {
                     label: 'Status',
                     field: 'status',
-                    sort: 'asc',                    
+                    sort: 'asc',
                 },
                 {
                     label: 'Actions',
                     field: 'actions',
-                    sort: 'asc',                    
+                    sort: 'asc',
                 }
             ],
             rows: []
@@ -72,18 +73,21 @@ const ListOrders = () => {
 
     return (
         <Fragment>
-            <MetaData title={'My Orders'} />
-            <h1 className='mt-5'>Your Orders</h1>
-            {loading ? <Loader /> : (
-                <MDBDataTable
-                    data={setOrders()}
-                    className='py-3'
-                    bordered
-                    striped
-                    hover
-                    responsive                    
-                />
-            )}
+            <Header />
+            <div className="container container-fluid">
+                <MetaData title={'My Orders'} />
+                <h1 className='mt-5'>Your Orders</h1>
+                {loading ? <Loader /> : (
+                    <MDBDataTable
+                        data={setOrders()}
+                        className='py-3'
+                        bordered
+                        striped
+                        hover
+                        responsive
+                    />
+                )}
+            </div>
         </Fragment>
     )
 }

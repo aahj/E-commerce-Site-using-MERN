@@ -6,6 +6,7 @@ import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcEl
 import { useAlert } from 'react-alert'
 import axios from 'axios';
 import { clearError, createOrder } from '../../actions/orderAction';
+import Header from '../Layouts/Header';
 import {
     Avatar, Button, CssBaseline, InputLabel, Grid, Typography, Container, makeStyles
 } from '@material-ui/core';
@@ -137,62 +138,65 @@ const Payment = ({ history }) => {
 
     return (
         <Fragment>
-            <CheckOutSteps shipping confirm payment />
-            <Container component="main" maxWidth="xs">
-                <MetaData title={'Payment'} />
-                <CssBaseline />
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <InfoIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Card Info
+            <Header />
+            <div className="container container-fluid">
+                <CheckOutSteps shipping confirm payment />
+                <Container component="main" maxWidth="xs">
+                    <MetaData title={'Payment'} />
+                    <CssBaseline />
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <InfoIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Card Info
                     </Typography>
-                    <form className={classes.form} onSubmit={submitHandler}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <InputLabel shrink={true}>Card Number</InputLabel>
-                                <CardNumberElement
-                                    type="text"
-                                    id="card_num_field"
-                                    className="form-control"
-                                    options={options}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <InputLabel shrink={true}>Card Expiry</InputLabel>
-                                <CardExpiryElement
-                                    type="text"
-                                    id="card_exp_field"
-                                    className="form-control"
-                                    options={options}
-                                />
-                            </Grid>
+                        <form className={classes.form} onSubmit={submitHandler}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <InputLabel shrink={true}>Card Number</InputLabel>
+                                    <CardNumberElement
+                                        type="text"
+                                        id="card_num_field"
+                                        className="form-control"
+                                        options={options}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <InputLabel shrink={true}>Card Expiry</InputLabel>
+                                    <CardExpiryElement
+                                        type="text"
+                                        id="card_exp_field"
+                                        className="form-control"
+                                        options={options}
+                                    />
+                                </Grid>
 
-                            <Grid item xs={12}>
-                                <InputLabel shrink={true}>Card CVC</InputLabel>
-                                <CardCvcElement
-                                    type="text"
-                                    id="card_cvc_field"
-                                    className="form-control"
-                                    options={options}
-                                />
-                            </Grid>
+                                <Grid item xs={12}>
+                                    <InputLabel shrink={true}>Card CVC</InputLabel>
+                                    <CardCvcElement
+                                        type="text"
+                                        id="card_cvc_field"
+                                        className="form-control"
+                                        options={options}
+                                    />
+                                </Grid>
 
-                        </Grid>
-                        <Button
-                            type="submit"
-                            id="pay_btn"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            className={classes.submit}
-                        >
-                            Pay {`- $${orderInfo.totalPrice}`}
-                        </Button>
-                    </form>
-                </div>
-            </Container>
+                            </Grid>
+                            <Button
+                                type="submit"
+                                id="pay_btn"
+                                fullWidth
+                                variant="contained"
+                                color="secondary"
+                                className={classes.submit}
+                            >
+                                Pay {`- $${orderInfo.totalPrice}`}
+                            </Button>
+                        </form>
+                    </div>
+                </Container>
+            </div>
         </Fragment>
     )
 }

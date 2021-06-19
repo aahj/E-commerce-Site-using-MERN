@@ -92,15 +92,20 @@ const ProductList = ({ history }) => {
                 name: product.name,
                 price: `$${product.price}`,
                 stock: product.stock,
-                actions: <Fragment>
-                    <Link to={`/admin/product/${product._id}`} className='btn btn-warning py-1 px-2'>
-                        <i className='fa fa-pencil'></i>
-                    </Link>
-                    <button className='btn btn-danger py-1 px-2 ml-2'
-                        onClick={() => deleteProductHandler(product._id)}>
-                        <i className='fa fa-trash'></i>
-                    </button>
-                </Fragment>
+                actions: <div className='d-flex justify-content-around'>
+                    <div>
+                        <Link to={`/admin/product/${product._id}`} className='btn btn-warning py-1 px-2'>
+                            <i className='fa fa-pencil'></i>
+                        </Link>
+                    </div>
+
+                    <div className='ml-1'>
+                        <button className='btn btn-danger py-1 px-2 ml-2'
+                            onClick={() => deleteProductHandler(product._id)}>
+                            <i className='fa fa-trash'></i>
+                        </button>
+                    </div>
+                </div>
             })
         });
         return data;

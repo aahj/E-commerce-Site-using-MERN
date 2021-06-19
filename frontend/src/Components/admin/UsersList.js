@@ -93,16 +93,21 @@ const UsersList = ({ history }) => {
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                actions: <Fragment>
-                    <Link to={`/admin/user/${user._id}`} className='btn btn-warning py-1 px-2'>
-                        <i className='fa fa-pencil'></i>
-                    </Link>
-                    <button
-                        onClick={() => deleteUserHandler(user._id)}
-                        className='btn btn-danger py-1 px-2 ml-2'>
-                        <i className='fa fa-trash'></i>
-                    </button>
-                </Fragment>
+                actions: <div className='d-flex justify-content-around'>
+                    <div>
+                        <Link to={`/admin/user/${user._id}`} className='btn btn-warning py-1 px-2'>
+                            <i className='fa fa-pencil'></i>
+                        </Link>
+                    </div>
+
+                    <div className='ml-1'>
+                        <button
+                            onClick={() => deleteUserHandler(user._id)}
+                            className='btn btn-danger py-1 px-2 ml-2'>
+                            <i className='fa fa-trash'></i>
+                        </button>
+                    </div>
+                </div>
             })
         });
         return data;

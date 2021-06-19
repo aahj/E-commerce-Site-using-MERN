@@ -3,7 +3,7 @@ import MetaData from '../Layouts/MetaData';
 import { useSelector } from 'react-redux';
 import CheckOutSteps from './CheckOutSteps';
 import { Link } from 'react-router-dom';
-
+import Header from '../Layouts/Header';
 
 const ConfirmOrder = ({ history }) => {
     const { user } = useSelector(state => state.auth);
@@ -11,6 +11,7 @@ const ConfirmOrder = ({ history }) => {
 
     //calculate order price
     const itemPrice = cartItems.reduce((acc, items) => acc + items.price * items.quantity, 0);
+
     // if item price is < 200 then add shipping price 25
     const shippingPrice = itemPrice > 200 ? 0 : 25;
     const taxPrice = Number((0.05 * itemPrice).toFixed(2));
@@ -31,6 +32,8 @@ const ConfirmOrder = ({ history }) => {
 
     return (
         <Fragment>
+             <Header />
+             <div className="container container-fluid">
             <MetaData title={'Confirm Order'} />
             <CheckOutSteps shipping confirm/>
             <div className="row d-flex justify-content-between">
@@ -48,15 +51,15 @@ const ConfirmOrder = ({ history }) => {
                             <hr />
                             <div className="cart-item my-1" key={item.product}>
                                 <div className="row">
-                                    <div className="col-4 col-lg-2">
-                                        <img src={item.image} alt={item.name} height="45" width="65" />
+                                    <div className="col-3 col-lg-2 col-md-3">
+                                        <img src={item.image} alt={item.name} height="60" width="70" />
                                     </div>
 
-                                    <div className="col-5 col-lg-6">
+                                    <div className="col-5 col-lg-5 col-md-5">
                                         <Link to={`/product/${item.product}`}>{item.name}</Link>
                                     </div>
 
-                                    <div className="col-4 col-lg-4 mt-4 mt-lg-0">
+                                    <div className="col-4 col-lg-5 col-md-4">
                                         <p>{item.quantity} x ${item.price} = <b>${(item.quantity * item.price).toFixed(2)}</b></p>
                                     </div>
 
@@ -88,7 +91,7 @@ const ConfirmOrder = ({ history }) => {
                 </div>
 
             </div>
-
+            </div>
         </Fragment>
     )
 }

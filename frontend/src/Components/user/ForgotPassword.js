@@ -3,13 +3,40 @@ import MetaData from '../Layouts/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassowrd, clearError } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
+import Header from '../Layouts/Header';
+import {
+    Avatar, Button, CssBaseline, makeStyles, TextField, Typography, Container
+} from '@material-ui/core';
+
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
 
 const ForgotPassword = () => {
+    const classes = useStyles();
 
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
     const alert = useAlert();
-    
+
     const { loading, error, message } = useSelector(state => state.forogotPassword);
 
     useEffect(() => {
@@ -19,7 +46,7 @@ const ForgotPassword = () => {
             dispatch(clearError());
         }
         if (message) {
-            alert.success(message)            
+            alert.success(message)
         }
 
     }, [dispatch, message, alert, error])
@@ -34,34 +61,45 @@ const ForgotPassword = () => {
 
     return (
         <Fragment>
+            <Header />
             <MetaData title={'Forgot Password'} />
-            <div className="row wrapper">
-                <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" onSubmit={submitHandler}>
-                        <h1 className="mb-3">Forgot Password</h1>
-                        <div className="form-group">
-                            <label htmlFor="email_field">Enter Email</label>
-                            <input
-                                type="email"
-                                id="email_field"
-                                className="form-control"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <VisibilityOffIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Forgot Password
+                            </Typography>
+                    <form className={classes.form} onSubmit={submitHandler}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Enter Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
 
-                        <button
-                            id="forgot_password_button"
+                        <Button
                             type="submit"
-                            className="btn btn-block py-3"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
                             disabled={loading ? true : false}
                         >
                             Send Email
-                    </button>
+                        </Button>
                     </form>
                 </div>
-            </div>
-
+            </Container>
         </Fragment>
     )
 }

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(12),        
+        paddingBottom: theme.spacing(12),
     },
 }));
 
@@ -94,16 +94,21 @@ const OrderList = ({ history }) => {
                 status: order.orderStatus && String(order.orderStatus).includes("Delivered")
                     ? <p style={{ color: 'green' }}>{order.orderStatus}</p>
                     : <p style={{ color: 'red' }}>{order.orderStatus}</p>,
-                actions: <Fragment>
-                    <Link to={`/admin/order/${order._id}`} className='btn btn-warning py-1 px-2'>
-                        <i className='fa fa-eye'></i>
-                    </Link>
-                    <button
-                        className='btn btn-danger py-1 px-2 ml-2'
-                        onClick={() => deleteOrderHandler(order._id)}>
-                        <i className='fa fa-trash'></i>
-                    </button>
-                </Fragment>
+                actions: <div className='d-flex justify-content-around'>
+                    <div>
+                        <Link to={`/admin/order/${order._id}`} className='btn btn-warning'>
+                            <i className='fa fa-eye'></i>
+                        </Link>
+                    </div>
+
+                    <div className='ml-1'>
+                        <button
+                            className='btn btn-danger'
+                            onClick={() => deleteOrderHandler(order._id)}>
+                            <i className='fa fa-trash'></i>
+                        </button>
+                    </div>
+                </div>
             })
         });
         return data;
@@ -117,7 +122,7 @@ const OrderList = ({ history }) => {
 
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                <Container maxWidth="lg" className={classes.container}>                    
+                <Container maxWidth="lg" className={classes.container}>
                     <h1 className='mb-5 mt-2'>All Orders</h1>
                     {loading ? <Loader /> : (
                         <MDBDataTable

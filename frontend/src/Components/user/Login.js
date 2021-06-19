@@ -5,6 +5,7 @@ import { login, clearError } from '../../actions/userAction';
 import Loader from '../Layouts/Loader';
 import { useAlert } from 'react-alert';
 import { Link } from 'react-router-dom';
+import Header from '../Layouts/Header';
 
 import {
     Avatar, Button, CssBaseline, TextField, Grid, Typography, Container
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = ({ history ,location}) => {
+const Login = ({ history, location }) => {
     const dispatch = useDispatch();
     const Alert = useAlert();
 
@@ -48,7 +49,7 @@ const Login = ({ history ,location}) => {
             history.push(redirect)
         }
         if (error) {
-            Alert.error(error);            
+            Alert.error(error);
             dispatch(clearError());
         }
 
@@ -63,67 +64,71 @@ const Login = ({ history ,location}) => {
     const classes = useStyles();
 
     return (
-        <Container component="main" maxWidth="xs">
-            {loading ? <Loader /> : (
-                <Fragment>
-                    <MetaData title={'Login'} />
-                    <CssBaseline />
-                    <div className={classes.paper}>
-                        <Avatar className={classes.avatar}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Sign in
-                        </Typography>
-                        <form className={classes.form} onSubmit={submitHandler}>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="secondary"
-                                className={classes.submit}
-                            >
-                                Sign In
-                            </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link to="/password/forgot" >Forgot password?</Link>
+        <Fragment>
+            <Header />
+            <Container component="main" maxWidth="xs">
+                {loading ? <Loader /> : (
+                    <Fragment>
+                        <MetaData title={'Login'} />
+                        <CssBaseline />
+                        <div className={classes.paper}>
+                            <Avatar className={classes.avatar}>
+                                <LockOutlinedIcon />
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Sign in
+                                </Typography>
+                            <form className={classes.form} onSubmit={submitHandler}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    color="secondary"
+                                    className={classes.submit}
+                                >
+                                    Sign In
+                                    </Button>
+                                <Grid container>
+                                    <Grid item xs>
+                                        <Link to="/password/forgot" >Forgot password?</Link>
+                                    </Grid>
+                                    <Grid item>
+                                        <Link to="/register">{"Don't have an account? Sign Up"}</Link>
+                                    </Grid>
                                 </Grid>
-                                <Grid item>
-                                    <Link to="/register">{"Don't have an account? Sign Up"}</Link>
-                                </Grid>
-                            </Grid>
-                        </form>
-                    </div>
-                </Fragment>
-            )}
-        </Container>
+                            </form>
+                        </div>
+                    </Fragment>
+                )}
+            </Container>
+        </Fragment>
+
     );
 }
 export default Login

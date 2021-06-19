@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import MetaData from '../Layouts/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { register_user, clearError } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
 import { Link } from 'react-router-dom';
+import Header from '../Layouts/Header';
 
 import {
     Avatar, Button, CssBaseline, TextField, Grid, Typography, Container, makeStyles
@@ -91,100 +92,103 @@ const Register = ({ history }) => {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
-            {/* <Fragment> */}
-            <MetaData title={'Register User'} />
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign up
+        <Fragment>
+            <Header />
+            <div className="container container-fluid">
+                <Container component="main" maxWidth="xs">
+                    <MetaData title={'Register User'} />
+                    <CssBaseline />
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign up
                     </Typography>
-                <form className={classes.form} onSubmit={submitHandler} encType='multipart/form-data'>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                autoComplete="fname"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="firstName"
-                                label="Name"
-                                autoFocus
-                                value={name}
-                                onChange={onChange}
-                                name="name"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                autoComplete="email"
-                                type="email"
-                                value={email}
-                                onChange={onChange}
-                                name="email"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                value={password}
-                                onChange={onChange}
-                                name="password"
-                            />
-                        </Grid>
+                        <form className={classes.form} onSubmit={submitHandler} encType='multipart/form-data'>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        autoComplete="fname"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="firstName"
+                                        label="Name"
+                                        autoFocus
+                                        value={name}
+                                        onChange={onChange}
+                                        name="name"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="email"
+                                        label="Email Address"
+                                        autoComplete="email"
+                                        type="email"
+                                        value={email}
+                                        onChange={onChange}
+                                        name="email"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="current-password"
+                                        value={password}
+                                        onChange={onChange}
+                                        name="password"
+                                    />
+                                </Grid>
 
-                        <Grid item xs={12} sm={2}>
-                            <Avatar alt='Avatar Preview' src={avatarPreview} />
-                        </Grid>
+                                <Grid item xs={12} sm={2}>
+                                    <Avatar alt='Avatar Preview' src={avatarPreview} />
+                                </Grid>
 
-                        <Grid item xs={12} sm={10}>
-                            <TextField
-                                variant="outlined"
-                                required
+                                <Grid item xs={12} sm={10}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        type="file"
+                                        id="customFile"
+                                        accept="images/*"
+                                        name="avatar"
+                                        onChange={onChange}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Button
+                                type="submit"
                                 fullWidth
-                                type="file"
-                                id="customFile"
-                                accept="images/*"
-                                name="avatar"
-                                onChange={onChange}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="secondary"
-                        className={classes.submit}
-                        disabled={loading ? true : false}
-                    >
-                        Sign Up
-                    </Button>
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link to='/login' variant="body2">
-                                Already have an account? Sign in
-                        </Link>
-                        </Grid>
-                    </Grid>
-                </form>
+                                variant="contained"
+                                color="secondary"
+                                className={classes.submit}
+                                disabled={loading ? true : false}
+                            >
+                                Sign Up
+                            </Button>
+                            <Grid container justify="flex-end">
+                                <Grid item>
+                                    <Link to='/login' variant="body2">
+                                        Already have an account? Sign in
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </form>
+                    </div>
+                </Container>
             </div>
-            {/* </Fragment> */}
-        </Container>
+        </Fragment>
     );
 }
 

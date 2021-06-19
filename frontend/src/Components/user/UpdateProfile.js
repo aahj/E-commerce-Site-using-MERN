@@ -1,9 +1,10 @@
-import React, {  useState, useEffect } from 'react';
+import React, { useState,Fragment, useEffect } from 'react';
 import MetaData from '../Layouts/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile, clearError, load_user } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
 import { UPDATE_PROFILE_RESET } from '../../constants/userConstant'
+import Header from '../Layouts/Header';
 
 import {
     Avatar, Button, CssBaseline, TextField, Grid, Typography, Container, makeStyles
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const UpdateProfile= ({ history }) => {
+const UpdateProfile = ({ history }) => {
     const classes = useStyles();
 
     const [name, setName] = useState('');
@@ -89,77 +90,81 @@ const UpdateProfile= ({ history }) => {
         reader.readAsDataURL(e.target.files[0])
     }
     return (
-        <Container component="main" maxWidth="xs">
-            <MetaData title={'Update Profile'} />
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <UpdateIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Update Profile
+        <Fragment>
+            <Header />
+            <Container component="main" maxWidth="xs">
+                <MetaData title={'Update Profile'} />
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <UpdateIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Update Profile
                     </Typography>
-                <form className={classes.form} onSubmit={submitHandler} encType='multipart/form-data'>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                autoComplete="fname"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="name"
-                                label="Name"
-                                autoFocus
-                                value={name}
-                                name='name'
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                autoComplete="email"
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                name="email"
-                            />
-                        </Grid>
+                    <form className={classes.form} onSubmit={submitHandler} encType='multipart/form-data'>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    autoComplete="fname"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="name"
+                                    label="Name"
+                                    autoFocus
+                                    value={name}
+                                    name='name'
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    autoComplete="email"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    name="email"
+                                />
+                            </Grid>
 
-                        <Grid item xs={12} sm={2}>
-                            <Avatar alt='Avatar Preview' src={user.avatar.url} />
-                        </Grid>
+                            <Grid item xs={12} sm={2}>
+                                <Avatar alt='Avatar Preview' src={user.avatar.url} />
+                            </Grid>
 
-                        <Grid item xs={12} sm={10}>
-                            <TextField
-                                variant="outlined"
-                                // required
-                                fullWidth
-                                type="file"
-                                id="customFile"
-                                accept="images/*"
-                                name="avatar"
-                                onChange={onChange}
-                            />
+                            <Grid item xs={12} sm={10}>
+                                <TextField
+                                    variant="outlined"
+                                    // required
+                                    fullWidth
+                                    type="file"
+                                    id="customFile"
+                                    accept="images/*"
+                                    name="avatar"
+                                    onChange={onChange}
+                                />
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="secondary"
-                        className={classes.submit}
-                        disabled={loading ? true : false}
-                    >
-                        Update
-                    </Button>
-                </form>
-            </div>
-        </Container>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
+                            disabled={loading ? true : false}
+                        >
+                            Update
+                            </Button>
+                    </form>
+                </div>
+            </Container>
+        </Fragment>
+
     )
 }
 

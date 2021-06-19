@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import MetaData from '../Layouts/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePassowrd, clearError } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
-import { UPDATE_PASSWORD_RESET } from '../../constants/userConstant'
+import { UPDATE_PASSWORD_RESET } from '../../constants/userConstant';
+import Header from '../Layouts/Header';
 
 import {
     Avatar, Button, CssBaseline, TextField, Grid, Typography, Container, makeStyles
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const UpdatePassword = ({history}) => {
+const UpdatePassword = ({ history }) => {
     const classes = useStyles();
     const [oldPassword, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
@@ -48,7 +49,7 @@ const UpdatePassword = ({history}) => {
             dispatch(clearError());
         }
         if (isUpdated) {
-            alert.success('Password Has Been Updated!')            
+            alert.success('Password Has Been Updated!')
 
             history.push('/me')
 
@@ -67,62 +68,66 @@ const UpdatePassword = ({history}) => {
         dispatch(updatePassowrd(formData))
     }
     return (
-        <Container component="main" maxWidth="xs">
-            <MetaData title={'Change Password'} />            
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <UpdateIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Update Password
-                    </Typography>
-                <form className={classes.form} onSubmit={submitHandler}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                        <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Old Password"
-                                type="password"
-                                id="old_password_field"
-                                autoComplete="current-password"
-                                value={oldPassword}
-                                onChange={(e) => setOldPassword(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                        <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="New Password"
-                                type="password"
-                                id="new_password_field"
-                                autoComplete="current-password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="secondary"
-                        className={classes.submit}
-                        disabled={loading ? true : false}
-                    >
+        <Fragment>
+            <Header />
+            <Container component="main" maxWidth="xs">
+                <MetaData title={'Change Password'} />
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <UpdateIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
                         Update Password
+                    </Typography>
+                    <form className={classes.form} onSubmit={submitHandler}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Old Password"
+                                    type="password"
+                                    id="old_password_field"
+                                    autoComplete="current-password"
+                                    value={oldPassword}
+                                    onChange={(e) => setOldPassword(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="New Password"
+                                    type="password"
+                                    id="new_password_field"
+                                    autoComplete="current-password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
+                            disabled={loading ? true : false}
+                        >
+                            Update Password
                     </Button>
-                </form>
-            </div>
-        </Container>
+                    </form>
+                </div>
+            </Container>
+        </Fragment>
+
     )
 }
 
