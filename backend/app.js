@@ -14,7 +14,7 @@ app.use(fileupload());
 
 //setting up configfile
 // dont want to use env on production mode
-if(process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').dotenv.config({ path: 'backend/config/config.env' })
+if(process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config({ path: 'backend/config/config.env' })
 
 // import all routes 
 const products = require('./routes/products');
