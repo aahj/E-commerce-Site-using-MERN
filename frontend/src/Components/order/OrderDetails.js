@@ -14,6 +14,7 @@ const OrderDetails = ({ match }) => {
     const { loading, error, order = {} } = useSelector(state => state.orderDetails);
     const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order;
 
+
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, 
     ${shippingInfo.postalCode}, ${shippingInfo.country}`;
 
@@ -36,10 +37,10 @@ const OrderDetails = ({ match }) => {
                 <MetaData title={'Order Details'} />
                 {loading ? <Loader /> : (
                     <Fragment>
-                        <div className="row d-flex justify-content-between">
-                            <div className="col-12 col-lg-8 mt-5 order-details">
+                        <div className="row">
+                            <div className="col-12 col-md-12 col-lg-9 mt-5 order-details">
 
-                                <h1 className="my-5">Order # {order._id}</h1>
+                                <h1 className="my-5 orderID">Order #{order._id}</h1>
 
                                 <h4 className="mb-4">Shipping Info</h4>
                                 <p><b>Name:</b> {user && user.name}</p>
@@ -64,22 +65,25 @@ const OrderDetails = ({ match }) => {
                                 <div className="cart-item my-1">
                                     {orderItems && orderItems.map(item => (
                                         <div key={item.product} className="row my-5">
-                                            <div className="col-4 col-lg-2">
+                                            <div className="col-3 col-md-3 col-lg-3">
                                                 <img src={item.image} alt={item.name} height="45" width="65" />
                                             </div>
 
-                                            <div className="col-5 col-lg-5">
+                                            <div className="col-9 col-md-4 col-lg-4">
                                                 <Link to={`/product/${item.product}`}>{item.name}</Link>
                                             </div>
 
+                                            <div className='col-12 col-md-5 col-lg-5 d-flex justify-content-between'>
 
-                                            <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                                                <p>${item.price}</p>
+                                                <div className=" mt-4 mt-lg-0 mt-md-0">
+                                                    <p>${item.price}</p>
+                                                </div>
+
+                                                <div className=" mt-4 mt-lg-0 mt-md-0">
+                                                    <p><span className='text-center'>{item.quantity}</span>Piece(s)</p>
+                                                </div>
                                             </div>
 
-                                            <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                                                <p>{item.quantity} Piece(s)</p>
-                                            </div>
                                         </div>
                                     ))}
 

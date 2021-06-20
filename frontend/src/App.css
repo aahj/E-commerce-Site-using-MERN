@@ -6,7 +6,7 @@
 }
 
 html, body {
-    font-family: 'Amazon Ember';
+    font-family: 'Roboto';
     width: 100%;
     height: 100%;
     margin: 0px;
@@ -36,7 +36,6 @@ html, body {
     width: 90%;
     margin-right: 35%;
 }
-
 
 #login_btn, #view_btn {
     background-color: #febd69;
@@ -95,7 +94,6 @@ html, body {
     height: 150px;
 }
 
-
 .ratings {
     font-size: 1.2rem;
     color: var(--primary_light);
@@ -106,6 +104,15 @@ html, body {
     color: grey;
     margin-left: 0.5rem;
 }
+
+/* Banner */
+
+.banner_img {
+    height: 100%;
+    max-height: 60vh;
+}
+
+/* Banner */
 
 /* Footer */
 
@@ -334,7 +341,6 @@ footer {
     box-shadow: none;
 }
 
-
 /* Checkout Steps */
 
 .checkout-progress div {
@@ -501,7 +507,6 @@ ul.CTAs a {
     margin-left: 0.4rem;
 }
 
-
 /* Reviews */
 
 .rating {
@@ -550,8 +555,8 @@ ul.CTAs a {
     color: #0d39fd;
 }
 
-
 /* ---------Resize------------ */
+
 @media screen and (max-width: 600px) {
     .triangle-active, .triangle2-active, .triangle-incomplete, .triangle2-incomplete {
         display: none;
@@ -570,17 +575,22 @@ ul.CTAs a {
         padding-left: 5px !important;
         padding-right: 5px !important;
     }
-    
 }
+
 @media screen and (max-width: 767px) {
-    .custom_card .card .card-body .card-title .h5{
+    .custom_card .card .card-body .card-title .h5 {
         font-size: 15px !important;
     }
-    .custom_card .card .card-body #view_btn{
+    .custom_card .card .card-body #view_btn {
         font-size: 13px !important;
     }
-    .custom_card .card .card-text{
+    .custom_card .card .card-text {
         font-size: 18px !important;
         font-weight: 600;
+    }
+    
+    /* order Detail Page */
+    .order-details .orderID {
+        font-size: 21px;
     }
 }

@@ -8,6 +8,7 @@ import { useAlert } from 'react-alert';
 import Pagination from "react-js-pagination";
 import { Slider } from '@material-ui/core';
 import Header from './Layouts/Header';
+import Banner from './Layouts/Banner';
 
 import clsx from 'clsx';
 import { makeStyles, Drawer, Container, Fab, IconButton } from '@material-ui/core';
@@ -175,6 +176,8 @@ const Home = ({ match }) => {
     return (
         <Fragment>
             <Header />
+            {!keyword && <Banner/> }
+            
             <div className="container container-fluid">
                 {loading ? <Loader /> :
                     <Fragment>

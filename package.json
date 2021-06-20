@@ -7,7 +7,8 @@
     "start": "node backend/server.js",
     "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/server",
     "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/server",
-    "seeder": "node backend/utills/seeder.js"
+    "seeder": "node backend/utills/seeder.js",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false && npm install --prefix frontend && npm run bild --prefix frontend"
   },
   "author": "aahj",
   "license": "ISC",

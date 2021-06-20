@@ -168,7 +168,7 @@ const Header = () => {
                 <Toolbar>
                     <div className={classes.logo}>
                         <Link to='/'>
-                            <img src='/image/logo.png' alt='Logo' />
+                            <img src='/image/logo.png' width='250' height='60' alt='Logo' />
                         </Link>
                     </div>
 
