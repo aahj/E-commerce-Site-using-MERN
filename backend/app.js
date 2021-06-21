@@ -32,11 +32,10 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
     app.use(express.static(path.join(__dirname, '../frontend/build')))
     // get all routes
     app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'))
+        res.sendFile(__dirname, '../frontend/build' + 'index.html')
     })
 }
 
 // middleware to handle error
 app.use(errorMiddleware);
-
 module.exports = app;
