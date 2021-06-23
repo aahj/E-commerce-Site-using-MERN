@@ -4,7 +4,7 @@ const errorMiddleware = require('./middlewares/error');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fileupload = require('express-fileupload');
-// const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 const path = require('path');
 
 app.use(express.json());
