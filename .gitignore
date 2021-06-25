@@ -3,7 +3,6 @@
 /frontend/node_modules
 
 # production
-/frontend//build
 
 # misc
 /frontend/.env.local
