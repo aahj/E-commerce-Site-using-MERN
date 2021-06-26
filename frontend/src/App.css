@@ -90,8 +90,9 @@ html, body {
 }
 
 .card-img-top {
-    width: 100% !important;
+    width: 90% !important;
     height: 150px;
+    margin:0 auto !important;
 }
 
 .ratings {
@@ -419,7 +420,8 @@ footer {
 
 .avatar-profile {
     height: 16rem;
-    width: 16rem;
+    width: 16rem;    
+    margin: 0 auto;
 }
 
 .user-info h4 {

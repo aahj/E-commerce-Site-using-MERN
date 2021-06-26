@@ -121,14 +121,14 @@ const Header = () => {
             onClose={handleMobileMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>
-                <IconButton aria-label="Home" color="inherit">
+                <IconButton >
                     <HomeIcon />
                 </IconButton>
                 <Link className='dropdown-item' to='/'>Home</Link>
             </MenuItem>
 
             <MenuItem onClick={handleMenuClose}>
-                <IconButton aria-label="show add to cart" color="inherit">
+                <IconButton aria-label="show add to cart">
                     <Badge badgeContent={cartItems.length} color="secondary">
                         <AddShoppingCartIcon />
                     </Badge>

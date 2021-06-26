@@ -15,14 +15,14 @@ const Profile = () => {
                     <Fragment>
                         <MetaData title={'Your Profile'} />
                         <h2 class="mt-5 ml-5">My Profile</h2>
-                        <div class="row justify-content-around mt-5 user-info">
+                        <div class="row justify-content-around my-5 user-info">
                             <div class="col-12 col-md-6 col-lg-5">
                                 <figure class='avatar avatar-profile'>
                                     <img class="rounded-circle img-fluid" src={user.avatar.url} alt={user.name} />
                                 </figure>
                                 <Link to="/me/update" id="edit_profile" class="btn btn-primary btn-block my-5">
                                     Edit Profile
-                            </Link>
+                                </Link>
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-5 offset-lg-2">
@@ -42,7 +42,7 @@ const Profile = () => {
                                 )}
                                 <Link to="/password/update" class="btn btn-primary btn-block mt-3">
                                     Change Password
-                            </Link>
+                                </Link>
                             </div>
                         </div>
                     </Fragment>
