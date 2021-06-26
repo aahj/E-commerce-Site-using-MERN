@@ -16,6 +16,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import TocIcon from '@material-ui/icons/Toc';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import HomeIcon from '@material-ui/icons/Home';
 
 const useStyles = makeStyles((theme) => ({
     appBar: { background: '#0D2F36' },
@@ -120,6 +121,13 @@ const Header = () => {
             onClose={handleMobileMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>
+                <IconButton aria-label="Home" color="inherit">
+                    <HomeIcon />
+                </IconButton>
+                <Link className='dropdown-item' to='/'>Home</Link>
+            </MenuItem>
+
+            <MenuItem onClick={handleMenuClose}>
                 <IconButton aria-label="show add to cart" color="inherit">
                     <Badge badgeContent={cartItems.length} color="secondary">
                         <AddShoppingCartIcon />
@@ -138,7 +146,7 @@ const Header = () => {
                     <Link className='dropdown-item' to='/dashboard'>Dashboard</Link>
                 </MenuItem>
             )}
-            
+
             <MenuItem onClick={handleMenuClose}>
                 <IconButton>
                     <TocIcon />
